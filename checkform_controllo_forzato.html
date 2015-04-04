@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<meta charset="utf-8">
+	<title>Checkform test submit js</title>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+	
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min.js"></script>
+	
+	<script type="text/javascript" src="checkform.js"></script>
+	
+	
+	<script type="text/javascript">
+		
+		$(document).ready(function() {
+			
+			var idx=1;
+			
+			$('#form1').cf().submit(function (e) {
+    			
+    			e.preventDefault();
+    			
+    			$('#mes').append('<p>' + (idx++) +' - cf_valid: <strong>' + $(this).data('cf_valid').toString() + '</strong></p>');
+    			
+    			if($(this).data('cf_valid')) alert('submit');
+    			
+			});
+			
+		});
+	</script>
+	
+	
+		
+</head>
+<body>
+	<div class="container">
+		<h1>Checkform test page</h1>
+		
+		<p>NB: il form ha l'attributo <em>novalidate</em>, per bloccare la validazione nativa del browser</p>
+		
+		<p>test con submit del browser disabilitato</p>
+	
+		<form role="form" id="form1" novalidate>
+			
+			
+			<div class="form-group">
+				<label class="control-label" for="required">Required</label>
+				<input required type="text" class="form-control" id="required" placeholder="Valore obbligatorio">
+			</div>
+			
+						
+			<div class="form-group">
+				<button id="submitButt" type="submit" class="btn btn-default">Submit</button>
+			</div>
+		</form>
+		
+		<div class="alert alert-info" id="mes"></div>
+
+		
+	</div>
+	
+</body>
+</html>
