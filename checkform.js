@@ -1,11 +1,13 @@
+/* jshint devel: true */
+/* globals moment */
+//* exported */
+
 /*@license
  * CHECKFORM 5 - novembre 2013
+ * 5.1: introdotta compatibilita con indirizzi mail con carattere `+` (es `myemail+label@gmail.com`)
  * Massimo Cassandro
  */
 
-// JSHint settings
-/* global moment */
-/*jslint devel: true */
 
 ;(function ( $, window, document, undefined ) {
 
@@ -49,7 +51,7 @@
 
         };
 
-    var mailRegExp=/^[\w\._=-]+@[\w\.-]+\.[a-zA-Z]{2,6}$/,
+    var mailRegExp=/^[\w\._=\-\+]+@[\w\.-]+\.[a-zA-Z]{2,6}$/,
 
         cf_err_mes = { // messaggi di Errore
             generico            : 'Il valore inserito non corrisponde ai requisiti richiesti',
@@ -154,7 +156,7 @@
             }
 
             // pre check
-            if(cf_opts.pre_check !== null) cf_opts.pre_check();
+            if(cf_opts.pre_check !== null) { cf_opts.pre_check(); }
 
             // controllo: selezione dei campi
             $(_form).find('input, select, textarea').not(':disabled').each(function() {
@@ -196,7 +198,7 @@
                             });
 
                         } else {
-                            if(!mailRegExp.test(_val)) _this_mes.push(cf_err_mes.email);
+                            if(!mailRegExp.test(_val)) { _this_mes.push(cf_err_mes.email); }
                         }
 
 
@@ -215,13 +217,13 @@
 
                     } else if(_type==='date' || _type==='datetime' || _type==='datetime-local') {
 
-                        if(!_cf.cf_parseDate(_val).isValid()) _this_mes.push(_type==='date'? cf_err_mes.date : cf_err_mes.datetime);
+                        if(!_cf.cf_parseDate(_val).isValid()) { _this_mes.push(_type==='date'? cf_err_mes.date : cf_err_mes.datetime); }
 
                     } else if(_type==='time') {
 
                         //if(!_cf.cf_check_ora(_val)) _this_mes.push(cf_err_mes.time);
 
-                        if(!moment(_val, "hh:mm").isValid()) _this_mes.push(cf_err_mes.time);
+                        if(!moment(_val, "hh:mm").isValid()) { _this_mes.push(cf_err_mes.time); }
 
 
                     } else if(_type==='number' || _type==='range') {
@@ -277,7 +279,7 @@
 
                             var pattern_regexp = new RegExp(_this_field.attr('pattern'));
 
-                            if(!pattern_regexp.test(_val)) _this_mes.push(cf_err_mes.generico);
+                            if(!pattern_regexp.test(_val)) { _this_mes.push(cf_err_mes.generico); }
                         }
 
 
@@ -471,8 +473,8 @@
 
                 $('.' + cf_opts.error_class).eq(0).focus();
 
-                // post check
-                if(cf_opts.post_check !== null) cf_opts.post_check();
+                // !post check
+                if(cf_opts.post_check !== null) { cf_opts.post_check(); }
 
 
                 if(cf_opts.error_alert) { window.alert(cf_opts.error_alert_mes);}
@@ -485,9 +487,9 @@
                     var original_label;
 
                     // aggiunge un valore hidden con lo stesso name e lo stesso value  del submit disabilitato
-                    if(!$('input:hidden[name="' + cf_opts.submit_button.attr('name') + '"]').length)
+                    if(!$('input:hidden[name="' + cf_opts.submit_button.attr('name') + '"]').length) {
                         cf_opts.submit_button.after('<input type="hidden" name="'+ cf_opts.submit_button.attr('name') +'" value="'+ cf_opts.submit_button.val() + '">');
-
+					}
                     // disabilita il pulsante
                     cf_opts.submit_button.attr("disabled", "disabled");
 
@@ -598,7 +600,7 @@
             // cifre dispari
             for( i = 1; i <= 9; i += 2 ) {
                 c = 2*( piva.charCodeAt(i) - '0'.charCodeAt(0) );
-                if( c > 9 ) c = c - 9;
+                if( c > 9 ) { c = c - 9; }
                 s += c;
             }
             if((10 - s%10) %10 !== piva.charCodeAt(10) - '0'.charCodeAt(0)) {return false;}

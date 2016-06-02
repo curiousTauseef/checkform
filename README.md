@@ -47,35 +47,40 @@ in caso contrario (il valore di default è `null`) viene identificato automatica
 
 ##Utilizzo
 
-	$(document).ready(function(){
+```javascript
+$(document).ready(function(){
 	
-		// aggiunge automaticamente il gestore eventi onsubmit
-		$('#form_id').cf();
-		
-    });
-
+	// aggiunge automaticamente il gestore eventi onsubmit
+	$('#form_id').cf();
+	
+});
+```
 
 Per controlli aggiuntivi o per aggiungere procedure ad hoc, si può testare il valore `data.cf_valid` assegnato al form durante la validazione:
     
-    $(document).ready(function(){
-        $('#form_id').cf().submit(function (event) {
-            
-            event.preventDefault();
-            
-            if($('form_id').data('cf_valid')) {
-                ...
-            }
-        });
-		
+```javascript
+$(document).ready(function(){
+    $('#form_id').cf().submit(function (event) {
+        
+        event.preventDefault();
+        
+        if($('form_id').data('cf_valid')) {
+            ...
+        }
     });
+	
+});
+```
     
 
 È possibile richiamare il controllo form anche senza il trigger del submit chiamando direttamente la funzione di controllo:
 
-	$('#form_id').cf().cf('checkform');
-	if($('form_id').data('cf_valid')) {
-            ...
-    }
+```javascript
+$('#form_id').cf().cf('checkform');
+if($('form_id').data('cf_valid')) {
+	...
+}
+```
 
 Il primo `cf()` istanzia il plugin, il secondo chiama la funzione `checkform` che esegue la validazione.
 
@@ -103,38 +108,36 @@ Parametri:
 
 * **`extra_check`**: (funzione, default: null) funzione extra per controlli non standard. Deve restituire un array di messaggi di errore che vengono riportati sopra il pulsante submit. Viene eseguita dopo i controlli standard. Se non vengono rilevati errori deve restituire un array vuoto.
 
-
-		$('#form_id').cf({
-			'extra_check': function () {
-				
-				var esito=[];
-
-				if(__test__) {
+```javascript
+$('#form_id').cf({
+	'extra_check': function () {
 		
-					esito.push("messaggio");
-				}
-	
-				return esito;
-			}
-		});
+		var esito=[];
 
+		if(__test__) {
+
+			esito.push("messaggio");
+		}
+
+		return esito;
+	}
+});
+```
 
 * **`extra_check_wrapper_class`**: (stringa, default: `cf_extra_check_wrapper`) classe assegnata al div che contiene i messaggi di errore generati dal controllo extra_check
 
 * **`post_check`**: (funzione, default: null) funzione extra eseguita dopo il controllo e dopo l'eventuale assegnazione delle classi di errore. Va usato per compiere eventuali azioni legate all'esito finale del controllo (ad esempio aprire un collapse di bootstrap):
 
-		post_check: function () {
-			if(_form_offerta.find(':invalid, .has_error').length) {
-
-				_form_offerta.find(':invalid').each( function() {
-					$(this).parent().addClass('has-error');
-				});
-				
-				_form_offerta.find(':invalid, .has_error').eq(0).parents('.collapse').eq(0).collapse('show');
-			}
-			
-		}
-	
+```javascript
+post_check: function () {
+	if(_form_offerta.find(':invalid, .has_error').length) {
+		_form_offerta.find(':invalid').each( function() {
+			$(this).parent().addClass('has-error');
+		});
+	_form_offerta.find(':invalid, .has_error').eq(0).parents('.collapse').eq(0).collapse('show');
+	}
+}
+```
 
 * **`disable_cf_on_cbox_id`**: (stringa, default: `cancellato`) id del checkbox che, se selezionato, non fa partire il controllo del form (visto che il record viene cancellato)
 
@@ -143,3 +146,10 @@ Parametri:
 Massimo Cassandro (2007-2014).
 
 Questo plugin è stato costruito utilizzando jQuery lightweight plugin boilerplate (http://jqueryboilerplate.com/)
+
+Richiede **moment.js** (http://momentjs.com)
+
+##Changelog
+
+* Vers. 5.1 - giugno 2016. *Introdotta compatibilita con indirizzi mail con carattere `+` (es. `myemail+label@gmail.com`)*
+* Vers. 5.0 - novembre 2013. *Prima versione come plugin jQuery*

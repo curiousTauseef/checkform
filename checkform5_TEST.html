@@ -3,77 +3,41 @@
 <head>
 	<meta charset="utf-8">
 	<title>Checkform 5 test</title>
-	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-	
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
-	
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-	
-	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min.js"></script>
-	
-	<script type="text/javascript" src="checkform.js"></script>
-	
-	
-	<script type="text/javascript">
-		
-		$(document).ready(function() {
-			$('#form1').cf({
-				pre_check : function () {
-					
-					alert('Opzione pre-check: viene eseguita prima degli altri controlli');
-				},
-				extra_check : function () {
-					
-					mes=[];
-					
-					if($('#extra').val()!== "456") mes.push('Il campo Extra non contiene 456');
-					
-					
-					return mes;
-				}
-			});
-		});
-	</script>
-	
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+
+
 	<style type="text/css" media="screen">
-	<!--
 		/* classe aggiunta all'alert di bootstrap per formattazione */
-	
+
 		.cf_error_mes {
 			margin-top:2px;
 			padding-top:5px;
 			padding-bottom:5px;
 		}
-		
+
 		/* classe assegnata al div che contiene i messaggi di errore del controllo extra_check */
 		.cf_extra_check_wrapper {
 			margin:2em 0 .5em;
-		}	
-		
-	-->
+		}
 	</style>
-		
+
 </head>
 <body>
 	<div class="container">
 		<h1>Checkform 5 test page</h1>
-		
+
 		<p>NB: il form ha l'attributo <em>novalidate</em>, per bloccare la validazione nativa del browser</p>
-	
+
 		<form role="form" id="form1" class="checkform" novalidate>
-			
-			
+
+
 			<div class="form-group">
 				<label class="control-label" for="required">Required</label>
 				<input required type="text" class="form-control" id="required" placeholder="Valore obbligatorio">
 			</div>
-			
+
 			<div class="form-group">
 				<div class="checkbox">
 					<label class="control-label">
@@ -81,7 +45,7 @@
 					</label>
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="selectrequired">Select required</label>
 				<select required class="form-control" id="selectrequired">
@@ -93,77 +57,77 @@
 				  <option>5</option>
 				</select>
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="email1">Email</label>
 				<input type="email" class="form-control" id="email1" placeholder="Inserisci un indirizzo email">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="email2">Email (multiple)</label>
 				<input type="email" class="form-control" id="email2" placeholder="Inserisci uno o più indirizzi email separati da virgola" multiple>
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="campodata">Data (min 2013-11-01)</label>
 				<input type="date" class="form-control" id="campodata" placeholder="gg/mm/aaaa" min="2013-11-01" value="30/10/2013">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="campoora">Ora (min="12:00" max="16:30")</label>
 				<input type="time" class="form-control" id="campoora" placeholder="hh:mm" min="12:00" max="16:30" value="11:45">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="datatora">Data / ora (min="2013-11-01 09:00" max="2013-12-01 12:30")</label>
 				<input type="datetime-local" class="form-control" id="datatora" placeholder="gg/mm/aaaa hh:mm" min="2013-11-01 09:00" max="2013-12-01 12:30" value="01/11/2013 08:59">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="number">Number (min 10, max 100)</label>
 				<input type="number" class="form-control" id="number" placeholder="Inserisci un numero" min="10" max="100" value="101">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="tel">Tel (generico)</label>
 				<input type="tel" class="form-control" id="tel" placeholder="Inserisci un numero di telefono">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="tel2">Tel (fisso italiano: data-cf_extra="tel_it")</label>
 				<input type="tel" class="form-control" id="tel2" placeholder="Inserisci un numero di telefono" data-cf_extra="tel_it">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="tel3">Tel (cellulare italiano: data-cf_extra="cell_it")</label>
 				<input type="tel" class="form-control" id="tel3" placeholder="Inserisci un numero di telefono" data-cf_extra="cell_it">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="pwd">Password con controllo minlength (data-cf_minlength="8")</label>
 				<input type="password" class="form-control" id="pwd" placeholder="Password" data-cf_minlength="8">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="pattern">Codice fiscale (data-cf_extra="cf_it")</label>
 				<input type="text" class="form-control" id="pattern" placeholder="Codice fiscale" data-cf_extra="cf_it" maxlength="16">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="codicefiscale">Pattern (pattern="\w{3} \w{4}")</label>
 				<input type="text" class="form-control" id="codicefiscale" placeholder="Pattern" value="123 456" pattern="\w{3} \w{4}">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="piva">Partita IVA (data-cf_extra="vat_it")</label>
 				<input type="text" class="form-control" id="piva" placeholder="Partita IVA" data-cf_extra="vat_it" maxlength="13">
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label" for="iban">iban (data-cf_extra="iban_it")</label>
 				<input type="text" class="form-control" id="iban" placeholder="IBAN" data-cf_extra="iban_it" maxlength="27">
 			</div>
-			
+
 			<div class="form-group cf_checkbox_group">
 				<p><strong>Serie checkbox (obbligatoria almeno una selezione)</strong></p>
 				<label class="checkbox-inline">
@@ -176,7 +140,7 @@
 					<input type="checkbox" id="inlineCheckbox3" value="option3"> 3
 				</label>
 			</div>
-			
+
 			<div class="form-group cf_checkbox_group">
 				<p><strong>Serie pusalnti radio (obbligatoria almeno una selezione)</strong></p>
 				<label class="radio-inline">
@@ -190,24 +154,49 @@
 				</label>
 			</div>
 
-			
-			
+
+
 			<div class="form-group">
 				<label class="control-label" for="extra">Campo per controllo extra</label>
 				<input type="text" class="form-control" id="extra" value="123">
 			</div>
-						
+
 			<div class="checkbox">
 				<label class="control-label">
 					<input type="checkbox" id="cancellato"> Questo checkbox disattiva il controllo
 				</label>
 			</div>
-						
+
 			<div class="form-group">
 				<button id="submitButton" type="submit" class="btn btn-default">Submit</button>
 			</div>
 		</form>
 	</div>
-	
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/locale/it.js"></script>
+	<script src="checkform.js"></script>
+
+	<script type="text/javascript">
+		$('#form1').cf({
+			pre_check : function () {
+
+				alert('Opzione pre-check: viene eseguita prima degli altri controlli');
+			},
+			extra_check : function () {
+
+				mes=[];
+
+				if($('#extra').val()!== "456") mes.push('Il campo Extra non contiene 456');
+
+
+				return mes;
+			}
+		});
+	</script>
+
 </body>
 </html>
