@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+</head>
+<body>
+<h1 id="checkform">Checkform</h1>
+
+<ul>
+<li>richiede jquery</li>
+<li>richiede momentjs per l&#8217;analisi delle date (http://momentjs.com)</li>
+</ul>
+
+<h2 id="funzionalità">Funzionalità</h2>
+
+<ul>
+<li><p>aggiunge un fallback alla validazione di base html5, aggiungendo propri controlli per i browser meno recenti</p></li>
+<li><p>permette l&#8217;attivazione di controlli incrociati basati sull&#8217;interazione di diversi elementi del form</p></li>
+<li><p>gli errori vengono visualizzati tramite un div generato sotto ogni campo con errore</p></li>
+<li><p>i campi con attributo disabled non vengono controllati</p></li>
+<li>Il controllo viene eseguito sulla base del tipo di elemento input utilizzato:
+
+<ul>
+<li>date</li>
+<li>time</li>
+<li>datetime e datetime-local</li>
+<li>number</li>
+<li>email</li>
+<li>tel</li>
+<li>url</li>
+</ul></li>
+<li>Vengono inoltre verificati eventuali attributi aggiuntivi:
+
+<ul>
+<li>required</li>
+<li>min e max</li>
+<li>pattern</li>
+</ul></li>
+<li>Ulteriori controlli possono essere eseguiti utilizzando l&#8217;attributo data-cf_extra:
+
+<ul>
+<li>tel_it (telefoni fissi italiani: primo numero 0, 1, 8 o +)</li>
+<li>cell_it (cellulari italiani: primo numero 3 o +)</li>
+<li>iban_it (iban italiano)</li>
+<li>cf_it (codice fiscale italiano)</li>
+<li>vat_it (partita iva italiana)</li>
+</ul></li>
+<li><p>controllo extra per la lunghezza minima delle stringhe con l&#8217;attributo <code>data-cf_minlength=&quot;_num_&quot;</code>
+(NB: il controllo <code>maxlength</code> è già un attributo standard html)</p></li>
+<li><p>controllo per gruppo di checkbox e almeno una selezione obbligatoria: si attiva assegnando al contenitore la classe <code>cf_checkbox_group</code></p></li>
+<li><p>È possibile scrivere un codice di validazione ad hoc utilizzando le proprietà <code>pre_check</code> e <code>extra_check</code> (pre_check viene eseguita prima dei controlli standard, extra_check dopo)</p></li>
+<li><p>Dopo il controllo, al form viene assegnato il valore data <code>cf_valid</code> <em>true</em> o <em>false</em> in base all&#8217;esito</p></li>
+<li><p>Se l&#8217;esito è positivo, il pulsante <code>Submit</code> viene disabilitato e viene visualizzata la stringa definita in <code>disabled_submit_label</code>.
+Il pulsante Submit può essere indicato esplicitamente con l&#8217;opzione <code>submit_button</code> (deve essere un oggetto jquery)
+in caso contrario (il valore di default è <code>null</code>) viene identificato automaticamente nel form.</p></li>
+</ul>
+
+<h2 id="utilizzo">Utilizzo</h2>
+
+<pre><code class="javascript">$(document).ready(function(){
+    
+    // aggiunge automaticamente il gestore eventi onsubmit
+    $('#form_id').cf();
+    
+});
+</code></pre>
+
+<p>Per controlli aggiuntivi o per aggiungere procedure ad hoc, si può testare il valore <code>data.cf_valid</code> assegnato al form durante la validazione:</p>
+
+<pre><code class="javascript">$(document).ready(function(){
+    $('#form_id').cf().submit(function (event) {
+        
+        event.preventDefault();
+        
+        if($('form_id').data('cf_valid')) {
+            ...
+        }
+    });
+    
+});
+</code></pre>
+
+<p>È possibile richiamare il controllo form anche senza il trigger del submit chiamando direttamente la funzione di controllo:</p>
+
+<pre><code class="javascript">$('#form_id').cf().cf('checkform');
+if($('form_id').data('cf_valid')) {
+    ...
+}
+</code></pre>
+
+<p>Il primo <code>cf()</code> istanzia il plugin, il secondo chiama la funzione <code>checkform</code> che esegue la validazione.</p>
+
+<h2 id="parametri:">Parametri:</h2>
+
+<ul>
+<li><p><strong><code>disable_submit</code></strong>: (boolean, default: <code>true</code>) disabilita il pulsante submit se la validazione è superata</p></li>
+<li><p><strong><code>submit_button</code></strong>: (elemento JQuery, default: <code>null</code>) pulsante submit. Se non indicato viene identificato automaticamente (il primo pulsante o input di tipo <em>submit</em> rilevato nel form)</p></li>
+<li><p><strong><code>disabled_submit_label</code></strong>: (stringa, default: <code>Operazione in corso... Attendere</code>) testo del pulsante label dopo la disabilitazione. Il testo originale del pulsante viene salvato in <code>data('original_label')</code></p></li>
+<li><p><strong><code>container</code></strong>: (stringa, default: <code>.form-group</code>) elemento posto intorno ad ogni ogni campo del form (e relativi label ecc.). Il default è lo standard di Bootstrap 3</p></li>
+<li><p><strong><code>error_class</code></strong>: (stringa, default: <code>has-error</code>, classe alert di errore di bootstrap 3, richiede il modulo alert.js di Bootstrap) la classe che viene assegnata all&#8217;elemento contenitore del campo in caso di validazione non superata</p></li>
+<li><p><strong><code>error_mes_template</code></strong>: markup per la visualizzazione dei messaggi d&#8217;errore. Deve avere la classe <code>cf_error_mes</code> (per l&#8217;identificazione e la rimozione dei messaggi) e deve contenere il segnaposto <code>@@error_mes@@</code> che sarà sostituito con il messaggio errore</p></li>
+<li><p><strong><code>error_alert</code></strong>: (boolean, default: <code>true</code>) aggiunge un alert in caso di errore</p></li>
+<li><p><strong><code>error_alert_mes</code></strong>: (stringa, default: <code>Sono stati rilevati degli errori</code>) Messaggio di errore visualizzato nell&#8217;alert (se abilitato)</p></li>
+<li><p><strong><code>pre_check</code></strong>: (funzione, default: null) funzione extra eseguita prima del controllo vero e proprio utilizzato per assegnare eventuali vincoli extra condizionali non restituisce nulla</p></li>
+<li><p><strong><code>extra_check</code></strong>: (funzione, default: null) funzione extra per controlli non standard. Deve restituire un array di messaggi di errore che vengono riportati sopra il pulsante submit. Viene eseguita dopo i controlli standard. Se non vengono rilevati errori deve restituire un array vuoto.</p></li>
+</ul>
+
+<pre><code class="javascript">$('#form_id').cf({
+    'extra_check': function () {
+        
+        var esito=[];
+
+        if(__test__) {
+
+            esito.push(&quot;messaggio&quot;);
+        }
+
+        return esito;
+    }
+});
+</code></pre>
+
+<ul>
+<li><p><strong><code>extra_check_wrapper_class</code></strong>: (stringa, default: <code>cf_extra_check_wrapper</code>) classe assegnata al div che contiene i messaggi di errore generati dal controllo extra_check</p></li>
+<li><p><strong><code>post_check</code></strong>: (funzione, default: null) funzione extra eseguita dopo il controllo e dopo l&#8217;eventuale assegnazione delle classi di errore. Va usato per compiere eventuali azioni legate all&#8217;esito finale del controllo (ad esempio aprire un collapse di bootstrap):</p></li>
+</ul>
+
+<pre><code class="javascript">post_check: function () {
+    if(_form_offerta.find(':invalid, .has_error').length) {
+        _form_offerta.find(':invalid').each( function() {
+            $(this).parent().addClass('has-error');
+        });
+    _form_offerta.find(':invalid, .has_error').eq(0).parents('.collapse').eq(0).collapse('show');
+    }
+}
+</code></pre>
+
+<ul>
+<li><strong><code>disable_cf_on_cbox_id</code></strong>: (stringa, default: <code>cancellato</code>) id del checkbox che, se selezionato, non fa partire il controllo del form (visto che il record viene cancellato)</li>
+</ul>
+
+<h2 id="credits">Credits</h2>
+
+<p>Massimo Cassandro (2007&#8211;2014).</p>
+
+<p>Questo plugin è stato costruito utilizzando jQuery lightweight plugin boilerplate (http://jqueryboilerplate.com/)</p>
+
+<p>Richiede <strong>moment.js</strong> (http://momentjs.com)</p>
+
+<h2 id="changelog">Changelog</h2>
+
+<ul>
+<li>Vers. 5.1 - giugno 2016. <em>Introdotta compatibilita con indirizzi mail con carattere <code>+</code> (es. <code>myemail+label@gmail.com</code>)</em></li>
+<li>Vers. 5.0 - novembre 2013. <em>Prima versione come plugin jQuery</em></li>
+</ul>
+
+</body>
+</html>

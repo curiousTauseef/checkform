@@ -151,5 +151,6 @@ Richiede **moment.js** (http://momentjs.com)
 
 ##Changelog
 
-* Vers. 5.1 - giugno 2016. *Introdotta compatibilita con indirizzi mail con carattere `+` (es. `myemail+label@gmail.com`)*
+* Vers. 5.0.2 - giugno 2016. *Introdotta compatibilita con url con carattere `+`*
+* Vers. 5.0.1 - giugno 2016. *Introdotta compatibilita con indirizzi mail con carattere `+` (es. `myemail+label@gmail.com`)*
 * Vers. 5.0 - novembre 2013. *Prima versione come plugin jQuery*

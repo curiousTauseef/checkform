@@ -4,7 +4,8 @@
 
 /*@license
  * CHECKFORM 5 - novembre 2013
- * 5.1: introdotta compatibilita con indirizzi mail con carattere `+` (es `myemail+label@gmail.com`)
+ * 5.0.2: introdotta compatibilita con url con carattere `+`
+ * 5.0.1: introdotta compatibilita con indirizzi mail con carattere `+` (es `myemail+label@gmail.com`)
  * Massimo Cassandro
  */
 
@@ -52,6 +53,8 @@
         };
 
     var mailRegExp=/^[\w\._=\-\+]+@[\w\.-]+\.[a-zA-Z]{2,6}$/,
+        urlregexp=/^https?:\/\/(([a-z]([a-z0-9\-\+]*)\.)+([a-z]{2,6})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(:[0-9]{1,5})?(\/[a-z0-9_\-\+\.~]+)*\/?(\?([a-z0-9+_\-\+\.%=&amp;])*)?(#[a-z][a-z0-9_]*)?$/i,
+
 
         cf_err_mes = { // messaggi di Errore
             generico            : 'Il valore inserito non corrisponde ai requisiti richiesti',
@@ -256,7 +259,6 @@
                         }
 
                     } else if(_type==='url' ) {
-                        var urlregexp=/^https?:\/\/(([a-z]([a-z0-9\-]*)\.)+([a-z]{2,6})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(:[0-9]{1,5})?(\/[a-z0-9_\-\.~]+)*\/?(\?([a-z0-9+_\-\.%=&amp;])*)?(#[a-z][a-z0-9_]*)?$/i;
                         if(!urlregexp.test(_val)) {
                             _this_mes.push(cf_err_mes.url);
                         }
