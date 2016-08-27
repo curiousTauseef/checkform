@@ -4,6 +4,7 @@
 
 /*@license
  * CHECKFORM 5 - novembre 2013
+ * 5.0.3: agosto 2016 - bugfix extra_check
  * 5.0.2: introdotta compatibilita con url con carattere `+`
  * 5.0.1: introdotta compatibilita con indirizzi mail con carattere `+` (es `myemail+label@gmail.com`)
  * Massimo Cassandro
@@ -453,17 +454,20 @@
             I messaggi vengono stampati sopra il pulsante di Submit (e' necessario sia identificabile) oppure sopra il form
             */
 
-            if(cf_opts.extra_check !== null && cf_opts.extra_check().length) { //} !== [] && cf_opts.extra_check() !== null) {
+            if(cf_opts.extra_check !== null) {
 
-                var extra_check_mes='<div class="' + cf_opts.extra_check_wrapper_class + '">' + cf_opts.error_mes_template.replace(/@@error_mes@@/, cf_opts.extra_check().join('<br>')) + '</div>';
+				var esito_extra_check = cf_opts.extra_check();
+				if( esito_extra_check.length ) {
+	                var extra_check_mes='<div class="' + cf_opts.extra_check_wrapper_class + '">' + cf_opts.error_mes_template.replace(/@@error_mes@@/, esito_extra_check.join('<br>')) + '</div>';
 
-                if($(_form).find(cf_opts.submit_button).length) {
-                    cf_opts.submit_button.before(extra_check_mes);
-                } else {
-                    $(_form).prepend(extra_check_mes);
-                }
+	                if($(_form).find(cf_opts.submit_button).length) {
+	                    cf_opts.submit_button.before(extra_check_mes);
+	                } else {
+	                    $(_form).prepend(extra_check_mes);
+	                }
 
-                is_err=true;
+	                is_err=true;
+	            }
             }
 
 
