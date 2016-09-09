@@ -4,6 +4,7 @@
 
 /*@license
  * CHECKFORM 5 - novembre 2013
+ * 5.0.4: settembre 2016 - bugfix url che cominciano con un numero
  * 5.0.3: agosto 2016 - bugfix extra_check
  * 5.0.2: introdotta compatibilita con url con carattere `+`
  * 5.0.1: introdotta compatibilita con indirizzi mail con carattere `+` (es `myemail+label@gmail.com`)
@@ -54,7 +55,7 @@
         };
 
     var mailRegExp=/^[\w\._=\-\+]+@[\w\.-]+\.[a-zA-Z]{2,6}$/,
-        urlregexp=/^https?:\/\/(([a-z]([a-z0-9\-\+]*)\.)+([a-z]{2,6})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(:[0-9]{1,5})?(\/[a-z0-9_\-\+\.~]+)*\/?(\?([a-z0-9+_\-\+\.%=&amp;])*)?(#[a-z][a-z0-9_]*)?$/i,
+        urlregexp=/^https?:\/\/(([a-z0-9]([a-z0-9\-\+]*)\.)+([a-z]{2,6})|(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(:[0-9]{1,5})?(\/[a-z0-9_\-\+\.~]+)*\/?(\?([a-z0-9+_\-\+\.%=&amp;])*)?(#[a-z][a-z0-9_]*)?$/i,
 
 
         cf_err_mes = { // messaggi di Errore
