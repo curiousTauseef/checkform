@@ -30,6 +30,7 @@
 	* iban_it (iban italiano)
 	* cf_it (codice fiscale italiano)
 	* vat_it (partita iva italiana)
+	* number_it (formato numerico italiano)
 	
 * controllo extra per la lunghezza minima delle stringhe con l'attributo `data-cf_minlength="_num_"`
 	(NB: il controllo `maxlength` è già un attributo standard html)
@@ -130,11 +131,11 @@ $('#form_id').cf({
 
 ```javascript
 post_check: function () {
-	if(_form_offerta.find(':invalid, .has_error').length) {
-		_form_offerta.find(':invalid').each( function() {
+	if(_form.find(':invalid, .has_error').length) {
+		_form.find(':invalid').each( function() {
 			$(this).parent().addClass('has-error');
 		});
-	_form_offerta.find(':invalid, .has_error').eq(0).parents('.collapse').eq(0).collapse('show');
+	_form.find(':invalid, .has_error').eq(0).parents('.collapse').eq(0).collapse('show');
 	}
 }
 ```
@@ -151,6 +152,9 @@ Richiede **moment.js** (http://momentjs.com)
 
 ##Changelog
 
+ * 5.1.0: febbraio 2017 - *controllo numeri in formato ita su campi text (sep decimale ',')*
+ * 5.0.4: settembre 2016 - *bugfix url che cominciano con un numero*
+ * 5.0.3: agosto 2016 - *bugfix extra_check*
 * Vers. 5.0.2 - giugno 2016. *Introdotta compatibilita con url con carattere `+`*
 * Vers. 5.0.1 - giugno 2016. *Introdotta compatibilita con indirizzi mail con carattere `+` (es. `myemail+label@gmail.com`)*
 * Vers. 5.0 - novembre 2013. *Prima versione come plugin jQuery*

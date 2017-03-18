@@ -1,14 +1,20 @@
 /* jshint devel: true */
-/* globals moment */
+/* globals moment, componenti:true */
 //* exported */
 
 /*@license
  * CHECKFORM 5 - novembre 2013
+ * Massimo Cassandro
+ *
+ * 5.2.0: marzo 2017 - integrazione con sistema componenti con personalizzazione
+ *        di alcuni elementi sulla base del framework utilizzato
+ * 5.1.0: febbraio 2017 - controllo numeri in formato ita su campi text (sep decimale ',')
  * 5.0.4: settembre 2016 - bugfix url che cominciano con un numero
  * 5.0.3: agosto 2016 - bugfix extra_check
  * 5.0.2: introdotta compatibilita con url con carattere `+`
  * 5.0.1: introdotta compatibilita con indirizzi mail con carattere `+` (es `myemail+label@gmail.com`)
- * Massimo Cassandro
+ *
+ *
  */
 
 
@@ -32,17 +38,36 @@
     // regularly referenced in your plugin).
 
     // Create the defaults once
+    window.componenti                  = window.componenti || {};
+    window.componenti.config           = window.componenti.config || {};
+    window.componenti.config.framework = window.componenti.config.framework || 'bootstrap3';
+
     var pluginName = "cf",
+    	framework_defaults = {
+	    	bootstrap3 : {
+		    	container           : '.form-group',
+		    	error_class         : 'has-error',
+		    	error_mes_template  : '<div class="alert alert-icon alert-danger alert-dismissable cf_error_mes">'+
+                                      '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
+                                      '@@error_mes@@'+
+                                      '</div>'
+	    	},
+	    	bootstrap4 : {
+		    	container           : '.form-group, .form-check',
+		    	error_class         : 'has-danger',
+		    	error_mes_template  : '<div class="alert alert-icon alert-danger alert-dismissable cf_error_mes">'+
+                                      '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
+                                      '@@error_mes@@'+
+                                      '</div>'
+	    	}
+    	},
         defaults = {
             disable_submit              : true,
             submit_button               : null,
             disabled_submit_label       : 'Operazione in corso... Attendere',
-            container                   : '.form-group', // boostrap standard
-            error_class                 : 'has-error', // bootstrap 3 error class
-            error_mes_template          : '<div class="alert alert-danger alert-dismissable cf_error_mes">'+
-                                            '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
-                                            '@@error_mes@@'+
-                                            '</div>',
+            container                   : framework_defaults[window.componenti.config.framework].container,
+            error_class                 : framework_defaults[window.componenti.config.framework].error_class,
+            error_mes_template          : framework_defaults[window.componenti.config.framework].error_mes_template,
             error_alert                 : true,
             error_alert_mes             : 'Sono stati rilevati degli errori',
             extra_check_wrapper_class   : 'cf_extra_check_wrapper',
@@ -418,9 +443,15 @@
 
                         if(!esito) {_this_mes.push(cf_err_mes.iban);}
 
-                    } // end iban
 
+					/* !number_it */
+                    } else if (_type==="text" && _cf_extra==='number_it') {
 
+						if( isNaN(_val.replace(/,/g, '.')) ) {
+                            _this_mes.push(cf_err_mes.number);
+                        }
+
+					} // end number_it
 
                 } // end if(_val !== '')
 

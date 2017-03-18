@@ -30,7 +30,7 @@
 
 		<p>NB: il form ha l'attributo <em>novalidate</em>, per bloccare la validazione nativa del browser</p>
 
-		<form role="form" id="form1" class="checkform" novalidate>
+		<form role="form" id="form1" novalidate>
 
 			<div class="form-group">
 				<label class="control-label" for="required">Required</label>
@@ -90,6 +90,11 @@
 			<div class="form-group">
 				<label class="control-label" for="number">Number (min 10, max 100)</label>
 				<input type="number" class="form-control" id="number" placeholder="Inserisci un numero" min="10" max="100" value="101">
+			</div>
+
+			<div class="form-group">
+				<label class="control-label" for="number">Number it data-cf_extra="number_it"</label>
+				<input type="text" class="form-control" id="number_it" placeholder="Inserisci un numero nel formato italiano" value="123,45" data-cf_extra="number_it">
 			</div>
 
 			<div class="form-group">
@@ -159,7 +164,7 @@
 			</div>
 
 			<div class="form-group">
-				<label class="control-label" for="extra">Campo per controllo extra</label>
+				<label class="control-label" for="extra">Campo per controllo `extra` (richiesto valore `456`)</label>
 				<input type="text" class="form-control" id="extra" value="123">
 			</div>
 
@@ -176,13 +181,13 @@
 	</div>
 
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/locale/it.js"></script>
+	<script src="../../bower_components/jquery/dist/jquery.js"></script>
+	<script src="../../bower_components/moment/min/moment.min.js"></script>
+	<script src="../../bower_components/moment/min/locales.js"></script>
 	<script src="checkform.js"></script>
 
 	<script type="text/javascript">
+
 		$('#form1').cf({
 			pre_check : function () {
 
@@ -192,7 +197,7 @@
 
 				mes=[];
 
-				if($('#extra').val()!== "456") mes.push('Il campo Extra non contiene 456');
+				if($('#extra').val()!== "456") mes.push('Il campo Extra ha valore diverso da `456`');
 
 
 				return mes;
